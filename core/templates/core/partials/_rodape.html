@@ -1,0 +1,9 @@
+{% if pagina == 'catalogo' or pagina == 'pedidos' %}
+<footer>CANES · {% if pagina == 'catalogo' %}Catálogo de produtos{% else %}Painel de pedidos{% endif %} · Projeto educacional</footer>
+{% else %}
+<footer class="site-footer">
+    <div class="container">
+        <p>CANES | Projeto didático Fullstack Python</p>
+    </div>
+</footer>
+{% endif %}

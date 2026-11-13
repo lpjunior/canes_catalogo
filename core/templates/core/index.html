@@ -1,0 +1,11 @@
+{% extends 'core/base.html' %}
+{% block title %}CANES | Início{% endblock %}
+
+{% block conteudo %}
+<section class="container" aria-labelledby="titulo-inicio">
+    <h1 id="titulo-inicio">{{ titulo }}</h1>
+    <p>{{ descricao }}</p>
+</section>
+
+{% include 'core/partials/_aviso.html' with titulo_aviso="Bem-vindo à CANES" mensagem_aviso="Conheça nossos produtos e soluções." %}
+{% endblock %}

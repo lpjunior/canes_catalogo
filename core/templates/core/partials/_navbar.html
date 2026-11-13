@@ -1,0 +1,8 @@
+<header>
+    <nav aria-label="Navegação principal">
+        <a href="{% url 'inicio' %}">CANES</a>
+        <a href="{% url 'inicio' %}"{% if pagina == 'inicio' %} aria-current="page"{% endif %}>Início</a>
+        <a href="{% url 'catalogo' %}"{% if pagina == 'catalogo' %} aria-current="page"{% endif %}>Catálogo</a>
+        <a href="{% url 'pedidos' %}"{% if pagina == 'pedidos' %} aria-current="page"{% endif %}>Pedidos</a>
+    </nav>
+</header>

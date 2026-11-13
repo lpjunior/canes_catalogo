@@ -1,0 +1,17 @@
+{% load static %} <!-- Carrega a biblioteca de tags de arquivos estáticos -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CANES{% endblock %}</title> <!-- block: substitui o título da página -->
+    {% block estilos %}<link rel="stylesheet" href="{% static 'core/css/style.css' %}">{% endblock %}
+</head>
+<body>
+    {% include 'core/partials/_navbar.html' with pagina=request.resolver_match.url_name %} <!-- include: insere um componente na página -->
+    <main>
+        {% block conteudo %}{% endblock %}
+    </main>
+    {% include 'core/partials/_rodape.html' with pagina=request.resolver_match.url_name %}
+</body>
+</html>

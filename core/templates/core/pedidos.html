@@ -1,0 +1,70 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ titulo }} | CANES{% endblock %}
+
+{% block conteudo %}
+      <div class="introducao">
+        <p class="sobretitulo">Gestão CANES</p>
+        <h1>{{ titulo }}</h1>
+        <p>{{ descricao }}</p>
+      </div>
+      <section class="indicadores" aria-label="Indicadores de pedidos">
+        <div class="indicador">
+          <span>Total de pedidos</span><strong>{{ total_pedidos }}</strong>
+        </div>
+        <div class="indicador">
+          <span>Pendentes</span><strong>{{ pedidos_pendentes }}</strong>
+        </div>
+        <div class="indicador">
+          <span>Concluídos</span><strong>{{ pedidos_concluidos }}</strong>
+        </div>
+        <div class="indicador">
+          <span>Valor total dos pedidos</span
+          ><strong>R$ {{ valor_total|floatformat:"2g" }}</strong>
+        </div>
+      </section>
+      <section aria-labelledby="lista-titulo">
+        <div class="cabecalho-lista">
+          <h2 id="lista-titulo">Todos os pedidos</h2>
+          <p>Dados fictícios para acompanhamento e estudo.</p>
+        </div>
+        <div class="pedidos">
+          {% for pedido in pedidos %}
+          <article>
+            <div class="pedido-topo">
+              <h3>{{ pedido.numero }}</h3>
+              {% if pedido.situacao == 'Pendente' %}<span
+                class="situacao pendente"
+                >Pendente</span>
+              {% else %}<span class="situacao concluido">Concluído</span>
+              {% endif %}
+            </div>
+            <p class="cliente">{{ pedido.cliente }}</p>
+            <dl>
+              <div>
+                <dt>Produto</dt>
+                <dd>{{ pedido.produto }}</dd>
+              </div>
+              <div>
+                <dt>Preço unitário</dt>
+                <dd>R$ {{ pedido.preco_unitario|floatformat:"2g" }}</dd>
+              </div>
+              <div>
+                <dt>Quantidade</dt>
+                <dd>{{ pedido.quantidade }}</dd>
+              </div>
+              <div class="total-pedido">
+                <dt>Total do pedido</dt>
+                <dd>R$ {{ pedido.valor_total|floatformat:"2g" }}</dd>
+              </div>
+            </dl>
+          </article>
+          {% empty %}
+          <div class="vazio">
+            <h3>Nenhum pedido encontrado</h3>
+            <p>Quando houver pedidos, eles aparecerão aqui.</p>
+          </div>
+          {% endfor %}
+        </div>
+      </section>
+{% endblock %}

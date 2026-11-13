@@ -1,0 +1,87 @@
+{% extends 'core/base.html' %} 
+{% block title %} {{ titulo|default:"Catálogo de produtos" }} | CANES{% endblock %} {% block conteudo %}
+<div class="introducao">
+  <p class="sobretitulo">Gestão CANES</p>
+  <h1>{{ titulo|default:"Catálogo de produtos" }}</h1>
+  <p>
+    {{ descricao|default:"Encontre as melhores soluções para o seu negócio em um só lugar." }}
+  </p>
+</div>
+
+<section class="indicadores" aria-label="Indicadores do catálogo">
+  <div class="indicador">
+    <span>Total de produtos</span>
+    <strong>
+        {% if total_produtos is not None %}
+        {{ total_produtos }}
+        {% else %}
+        {{ produtos|length }}
+        {% endif %}
+    </strong>
+  </div>
+  <div class="indicador">
+    <span>Disponíveis</span>
+    <strong>
+        {% if produtos_disponiveis is not None %}
+        {{ produtos_disponiveis }}
+        {% else %}
+        {{ produtos|length }}
+        {% endif %}
+    </strong>
+  </div>
+  <div class="indicador">
+    <span>Valor em estoque</span>
+    <strong>
+        {% if valor_total_estoque is not None %}R$ {{ valor_total_estoque|floatformat:"2g" }}{% else %}R$ 0,00{% endif %}
+    </strong>
+  </div>
+</section>
+<section aria-labelledby="lista-titulo">
+  <div class="cabecalho-lista">
+    <h2 id="lista-titulo">Todos os produtos</h2>
+    <p>Informações atualizadas do nosso catálogo.</p>
+  </div>
+  <div class="pedidos">
+    {% for item in produtos %}
+    <article>
+      <div class="pedido-topo">
+        <h3>{{ item.nome }}</h3>
+        {% if item.estoque > 0 %}<span class="situacao concluido">Disponível</span>
+        {% else %}<span class="situacao pendente">Indisponível</span>
+        {% endif %}
+      </div>
+      <p class="cliente">
+        {% if item.categoria %}{{ item.categoria }}{% else %}Produto Canes{% endif %}
+      </p>
+      <dl>
+        {% if item.descricao %}
+        <div>
+          <dt>Descrição</dt>
+          <dd>{{ item.descricao }}</dd>
+        </div>
+        {% endif %}
+        <div>
+          <dt>Preço unitário</dt>
+          <dd>R$ {{ item.preco|floatformat:"2g" }}</dd>
+        </div>
+        <div>
+          <dt>Estoque</dt>
+          <dd>{{ item.estoque }} unidade{{ item.estoque|pluralize }}</dd>
+        </div>
+        {% if item.codigo %}
+        <div class="total-pedido">
+          <dt>Código</dt>
+          <dd>{{ item.codigo }}</dd>
+        </div>
+        {% endif %}
+      </dl>
+    </article>
+    {% empty %}
+    <div class="vazio">
+      <h3>Nenhum produto encontrado</h3>
+      <p>Quando houver produtos, eles aparecerão aqui.</p>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

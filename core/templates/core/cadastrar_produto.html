@@ -1,0 +1,55 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ titulo }} | CANES{% endblock %}
+
+{% block conteudo %}
+
+<div class="introducao">
+  <p class="sobretitulo">Gestão CANES</p>
+  <h1>{{ titulo }}</h1>
+  <p>Preencha os campos para adicionar um produto ao catálogo da CANES.</p>
+</div>
+
+<section class="cadastro-produto" aria-labelledby="dados-produto-titulo">
+  <div class="cabecalho-lista">
+    <h2 id="dados-produto-titulo">Dados do produto</h2>
+    <p>Todos os campos são obrigatórios.</p>
+  </div>
+
+  <form method="post"
+        action="{% url 'cadastrar_produto' %}"
+        class="formulario-produto">
+    {% csrf_token %}
+
+    {{ form.non_field_errors }}
+
+    <div class="campo">
+      {{ form.nome.label_tag }}
+      {{ form.nome }}
+      {{ form.nome.errors }}
+    </div>
+
+    <div class="campos-em-linha">
+      <div class="campo">
+        {{ form.preco.label_tag }}
+        {{ form.preco }}
+        {{ form.preco.errors }}
+        <small>Preço em reais. Exemplo: 89,90.</small>
+      </div>
+
+      <div class="campo">
+        {{ form.estoque.label_tag }}
+        {{ form.estoque }}
+        {{ form.estoque.errors }}
+        <small>Informe zero se o produto estiver esgotado.</small>
+      </div>
+    </div>
+
+    <div class="acoes-formulario">
+      <button type="submit">Salvar produto</button>
+      <a href="{% url 'catalogo' %}">Cancelar</a>
+    </div>
+  </form>
+</section>
+
+{% endblock %}

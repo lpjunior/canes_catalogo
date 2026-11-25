@@ -4,5 +4,6 @@
         <a href="{% url 'inicio' %}"{% if pagina == 'inicio' %} aria-current="page"{% endif %}>Início</a>
         <a href="{% url 'catalogo' %}"{% if pagina == 'catalogo' %} aria-current="page"{% endif %}>Catálogo</a>
         <a href="{% url 'pedidos' %}"{% if pagina == 'pedidos' %} aria-current="page"{% endif %}>Pedidos</a>
+        <a href="{% url 'cadastrar_produto' %}"{% if pagina == 'cadastrar_produto' %} aria-current="page"{% endif %}>Cadastrar Produto</a>
     </nav>
 </header>

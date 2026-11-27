@@ -1,0 +1,33 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ titulo }} | CANES{% endblock %}
+
+{% block conteudo %}
+<div class="introducao">
+  <p class="sobretitulo">Gestão CANES</p>
+  <h1>Confirmar exclusão do pedido</h1>
+  <p>O pedido sairá da listagem e dos indicadores. Seus dados serão mantidos no histórico do banco.</p>
+</div>
+
+<section class="cadastro-produto" aria-labelledby="dados-pedido-titulo">
+  <div class="cabecalho-lista">
+    <h2 id="dados-pedido-titulo">Pedido a excluir</h2>
+  </div>
+
+  <form method="post" class="formulario-produto">
+    {% csrf_token %}
+    <dl>
+      <div><dt>Número</dt><dd>{{ pedido.numero }}</dd></div>
+      <div><dt>Cliente</dt><dd>{{ pedido.cliente }}</dd></div>
+      <div><dt>Produto</dt><dd>{{ pedido.produto.nome }}</dd></div>
+      <div><dt>Preço unitário</dt><dd>R$ {{ pedido.preco_unitario|floatformat:"2g" }}</dd></div>
+      <div><dt>Quantidade</dt><dd>{{ pedido.quantidade }}</dd></div>
+      <div><dt>Situação</dt><dd>{{ pedido.get_situacao_display }}</dd></div>
+    </dl>
+    <div class="acoes-formulario">
+      <button type="submit" class="acao-excluir">Confirmar exclusão</button>
+      <a href="{% url 'pedidos' %}">Cancelar</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

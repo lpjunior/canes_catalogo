@@ -38,7 +38,15 @@ nav a {
   font-size: 0.95rem;
   padding: 6px 0;
 }
-nav a:first-child {
+nav a:hover {
+  text-decoration: none;
+}
+nav > a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+nav > a:first-child {
   font-size: 1.5rem;
   font-weight: 850;
   letter-spacing: 0.09em;
@@ -47,8 +55,68 @@ nav a:first-child {
 }
 nav a[aria-current] {
   color: white;
-  border-bottom: 2px solid #74b9ff;
   font-weight: 700;
+}
+.menu-dropdown {
+  position: relative;
+  flex-shrink: 0;
+}
+.menu-dropdown summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  min-height: 44px;
+  color: #e0ebfa;
+  font-size: 0.95rem;
+  list-style: none;
+  cursor: pointer;
+}
+.menu-dropdown summary::-webkit-details-marker {
+  display: none;
+}
+.menu-dropdown summary::after {
+  content: "▾";
+}
+.menu-dropdown[open] summary::after {
+  content: "▴";
+}
+.menu-dropdown summary:hover {
+  color: white;
+}
+.menu-dropdown summary:focus-visible {
+  outline: 3px solid #74b9ff;
+  outline-offset: 5px;
+  border-radius: 2px;
+}
+.menu-dropdown.ativo summary {
+  color: white;
+  font-weight: 700;
+}
+.submenu-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 10;
+  width: 240px;
+  max-width: calc(100vw - 40px);
+  padding: 8px;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 6px 20px #102a431a;
+}
+.submenu-dropdown a {
+  display: block;
+  min-height: 44px;
+  padding: 10px 12px;
+  border-radius: 4px;
+  color: var(--ink);
+}
+.submenu-dropdown a:hover,
+.submenu-dropdown a[aria-current] {
+  background: #eaf3ff;
+  color: var(--ink);
 }
 a:hover {
   text-decoration: underline;
@@ -248,7 +316,8 @@ footer {
   font-size: 0.85rem;
   font-weight: 650;
 }
-.formulario-produto input {
+.formulario-produto input,
+.formulario-produto select {
   width: 100%;
   min-width: 0;
   min-height: 48px;
@@ -260,11 +329,13 @@ footer {
   font: inherit;
 }
 .formulario-produto input:focus-visible,
+.formulario-produto select:focus-visible,
 .acoes-formulario button:focus-visible {
   outline: 3px solid #74b9ff;
   outline-offset: 3px;
 }
-.formulario-produto input:focus-visible {
+.formulario-produto input:focus-visible,
+.formulario-produto select:focus-visible {
   border-color: var(--blue);
 }
 .formulario-produto small {
@@ -278,7 +349,8 @@ footer {
   font-size: 0.85rem;
   overflow-wrap: anywhere;
 }
-.formulario-produto input[aria-invalid="true"] {
+.formulario-produto input[aria-invalid="true"],
+.formulario-produto select[aria-invalid="true"] {
   border-color: #a12622;
 }
 .acoes-formulario {
@@ -319,6 +391,19 @@ footer {
   background: #f3f7fc;
   color: var(--ink);
 }
+.acoes-produto {
+  margin-top: 24px;
+}
+.acoes-formulario .acao-excluir {
+  background: #a12622;
+  border-color: #a12622;
+  color: white;
+}
+.acoes-formulario .acao-excluir:hover {
+  background: #7d1c19;
+  border-color: #7d1c19;
+  color: white;
+}
 @media (max-width: 1000px) {
   .indicadores {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -333,6 +418,18 @@ footer {
   }
   nav {
     gap: 20px;
+  }
+  .menu-dropdown {
+    width: 100%;
+  }
+  .menu-dropdown summary {
+    justify-content: space-between;
+  }
+  .submenu-dropdown {
+    position: static;
+    width: 100%;
+    max-width: none;
+    margin-top: 8px;
   }
   .indicadores,
   .pedidos {

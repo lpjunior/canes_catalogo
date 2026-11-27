@@ -75,6 +75,13 @@
         </div>
         {% endif %}
       </dl>
+      <div class="acoes-formulario acoes-produto">
+        <a href="{% url 'editar_produto' item.id %}"
+           aria-label="Editar {{ item.nome }}">Editar</a>
+        <a href="{% url 'excluir_produto' item.id %}"
+           class="acao-excluir"
+           aria-label="Excluir {{ item.nome }}">Excluir</a>
+      </div>
     </article>
     {% empty %}
     <div class="vazio">

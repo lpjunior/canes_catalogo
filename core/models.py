@@ -19,12 +19,13 @@ class Pedido(models.Model):
     cliente = models.CharField(max_length=120)
 
     # constraint - restrição de integridade referencial
-    produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
+    produto = models.ForeignKey(Produto, on_delete=models.PROTECT)
 
     preco_unitario = models.DecimalField(max_digits=10, decimal_places=2)
     quantidade = models.PositiveIntegerField(default=1)
     
     situacao = models.CharField(max_length=20, choices=SITUACAO_CHOICES, default="PENDENTE")
+    excluido_em = models.DateTimeField(null=True, blank=True, editable=False, db_index=True)
 
     def __str__(self):
         return f"Pedido {self.numero} - Cliente: {self.cliente} - Produto: {self.produto.nome} - Situação: {self.situacao}"

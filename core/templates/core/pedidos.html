@@ -25,8 +25,11 @@
       </section>
       <section aria-labelledby="lista-titulo">
         <div class="cabecalho-lista">
-          <h2 id="lista-titulo">Todos os pedidos</h2>
-          <p>Dados fictícios para acompanhamento e estudo.</p>
+          <h2 id="lista-titulo">Pedidos ativos</h2>
+          <p>Acompanhe e gerencie os pedidos cadastrados.</p>
+          <div class="acoes-formulario">
+            <a href="{% url 'cadastrar_pedido' %}">Cadastrar pedido</a>
+          </div>
         </div>
         <div class="pedidos">
           {% for pedido in pedidos %}
@@ -43,7 +46,7 @@
             <dl>
               <div>
                 <dt>Produto</dt>
-                <dd>{{ pedido.produto }}</dd>
+                <dd>{{ pedido.produto__nome }}</dd>
               </div>
               <div>
                 <dt>Preço unitário</dt>
@@ -58,6 +61,13 @@
                 <dd>R$ {{ pedido.valor_total|floatformat:"2g" }}</dd>
               </div>
             </dl>
+            <div class="acoes-formulario acoes-produto">
+              <a href="{% url 'editar_pedido' pedido.id %}"
+                 aria-label="Editar pedido {{ pedido.numero }}">Editar</a>
+              <a href="{% url 'excluir_pedido' pedido.id %}"
+                 class="acao-excluir"
+                 aria-label="Excluir pedido {{ pedido.numero }}">Excluir</a>
+            </div>
           </article>
           {% empty %}
           <div class="vazio">

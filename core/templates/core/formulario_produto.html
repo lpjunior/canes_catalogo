@@ -7,7 +7,7 @@
 <div class="introducao">
   <p class="sobretitulo">Gestão CANES</p>
   <h1>{{ titulo }}</h1>
-  <p>Preencha os campos para adicionar um produto ao catálogo da CANES.</p>
+  <p>{{ descricao }}</p>
 </div>
 
 <section class="cadastro-produto" aria-labelledby="dados-produto-titulo">
@@ -17,7 +17,6 @@
   </div>
 
   <form method="post"
-        action="{% url 'cadastrar_produto' %}"
         class="formulario-produto">
     {% csrf_token %}
 
@@ -46,8 +45,11 @@
     </div>
 
     <div class="acoes-formulario">
-      <button type="submit">Salvar produto</button>
+      <button type="submit">{{ texto_botao}}</button>
       <a href="{% url 'catalogo' %}">Cancelar</a>
+      {% if form.instance.pk %}
+      <a href="{% url 'excluir_produto' form.instance.pk %}" class="acao-excluir">Excluir produto</a>
+      {% endif %}
     </div>
   </form>
 </section>

@@ -1,9 +1,23 @@
+{% load static %}
+<script src="{% static 'core/js/navbar.js' %}?v=navbar-3" defer></script>
 <header>
     <nav aria-label="Navegação principal">
         <a href="{% url 'inicio' %}">CANES</a>
         <a href="{% url 'inicio' %}"{% if pagina == 'inicio' %} aria-current="page"{% endif %}>Início</a>
         <a href="{% url 'catalogo' %}"{% if pagina == 'catalogo' %} aria-current="page"{% endif %}>Catálogo</a>
-        <a href="{% url 'pedidos' %}"{% if pagina == 'pedidos' %} aria-current="page"{% endif %}>Pedidos</a>
-        <a href="{% url 'cadastrar_produto' %}"{% if pagina == 'cadastrar_produto' %} aria-current="page"{% endif %}>Cadastrar Produto</a>
+        <details class="menu-dropdown{% if pagina == 'pedidos' or pagina == 'cadastrar_pedido' or pagina == 'editar_pedido' or pagina == 'excluir_pedido' %} ativo{% endif %}">
+            <summary aria-controls="submenu-pedidos">Pedidos</summary>
+            <div class="submenu-dropdown" id="submenu-pedidos">
+                <a href="{% url 'cadastrar_pedido' %}"{% if pagina == 'cadastrar_pedido' %} aria-current="page"{% endif %}>Cadastrar pedido</a>
+                <a href="{% url 'pedidos' %}#lista-titulo"{% if pagina == 'pedidos' %} aria-current="page"{% endif %}>Editar pedido</a>
+            </div>
+        </details>
+        <details class="menu-dropdown{% if pagina == 'cadastrar_produto' or pagina == 'editar_produto' or pagina == 'excluir_produto' %} ativo{% endif %}">
+            <summary aria-controls="submenu-produtos">Gerenciar produtos</summary>
+            <div class="submenu-dropdown" id="submenu-produtos">
+                <a href="{% url 'cadastrar_produto' %}"{% if pagina == 'cadastrar_produto' %} aria-current="page"{% endif %}>Cadastrar produto</a>
+                <a href="{% url 'catalogo' %}#lista-titulo">Editar produto</a>
+            </div>
+        </details>
     </nav>
 </header>

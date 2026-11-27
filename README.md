@@ -1,17 +1,20 @@
 # CANES — Catálogo e pedidos
 
-Projeto didático de Django para estudo de views, rotas, cálculos em Python e templates. Apresenta um catálogo de produtos e um painel de pedidos com dados fictícios definidos em memória.
+Projeto didático de Django para estudo de models, formulários, views, rotas, cálculos em Python e templates. Apresenta um catálogo de produtos e um painel de pedidos com persistência em SQLite.
 
 ## Funcionalidades
 
 - Página inicial com apresentação do projeto.
 - Catálogo com preços, estoque, situação dos produtos e indicadores.
 - Painel de pedidos com clientes, quantidades, situações e totais calculados com `Decimal`.
+- Cadastro, edição e exclusão lógica de pedidos, com validação de preço e quantidade positivos.
 - Mensagens alternativas para listas vazias.
 - Saudação personalizada pelo nome informado na URL.
 - Herança de templates com `base.html`, componentes reutilizáveis de navbar, rodapé e aviso, e estilos em `core/static/core/css/style.css`.
 
-Os produtos e pedidos são definidos no código. Não há formulário de cadastro nem persistência desses dados no banco. O SQLite é utilizado pela infraestrutura padrão do Django.
+Produtos e pedidos são cadastrados por formulários e persistidos em SQLite. Para gerenciar pedidos, acesse `/pedidos/` e use as ações de cadastrar, editar e excluir.
+
+A exclusão de um pedido preenche `Pedido.excluido_em`, mantendo o registro e seu número no banco. Pedidos excluídos saem da listagem e dos indicadores e não podem ser editados. Produtos com pedidos vinculados, inclusive excluídos, têm sua exclusão bloqueada para preservar o histórico. O preço unitário é informado no pedido e não muda automaticamente quando o preço do catálogo é alterado.
 
 ## Instalação e execução
 
@@ -46,6 +49,9 @@ Se um ambiente virtual existente apontar para um Python removido ou inacessível
 | `/` | Início |
 | `/catalogo/` | Catálogo de produtos |
 | `/pedidos/` | Painel de pedidos |
+| `/pedidos/novo/` | Cadastro de pedido |
+| `/pedidos/<id>/editar/` | Edição de pedido |
+| `/pedidos/<id>/excluir/` | Confirmação de exclusão lógica de pedido |
 | `/ola/Maria/` | Exemplo de saudação personalizada |
 | `/admin/` | Administração padrão do Django |
 
@@ -81,7 +87,7 @@ canes_catalogo/
 └── requirements.txt
 ```
 
-Para alterar os dados de demonstração, edite as listas em `core/views.py`. Os cálculos do catálogo estão em `core/services.py`; os indicadores de pedidos são calculados em `calcular_indicadores_pedidos`, em `core/views.py`.
+Para alterar os dados, use os formulários de produtos e pedidos. Os cálculos do catálogo e os indicadores de pedidos estão em `core/services.py`.
 
 ## Verificações
 
@@ -92,7 +98,7 @@ Para alterar os dados de demonstração, edite as listas em `core/views.py`. Os 
 
 No Linux e macOS, substitua `.\.venv\Scripts\python.exe` por `.venv/bin/python`.
 
-Os testes existentes cobrem a página de pedidos, seus indicadores e valores, cálculos com outros dados, lista vazia e links de navegação. Os comandos acima permitem verificar o estado atual do projeto; esta documentação não representa uma execução bem-sucedida dos testes.
+Os testes cobrem cadastro, edição, validação dos formulários, confirmação e exclusão lógica, preservação do histórico, proteção CSRF, indicadores, lista vazia e links de navegação.
 
 ## Configuração local
 

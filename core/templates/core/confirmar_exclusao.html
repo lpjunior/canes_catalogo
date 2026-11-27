@@ -1,0 +1,56 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ titulo }} | CANES{% endblock %}
+
+{% block conteudo %}
+<div class="introducao">
+  <p class="sobretitulo">Gestão CANES</p>
+  <h1>Confirmar exclusão</h1>
+  <p>Confira os dados do produto antes de confirmar sua exclusão do catálogo.</p>
+</div>
+
+<section class="cadastro-produto" aria-labelledby="dados-produto-titulo">
+  <div class="cabecalho-lista">
+    <h2 id="dados-produto-titulo">Produto a excluir</h2>
+    <p>Esta ação não pode ser desfeita.</p>
+  </div>
+
+  <form method="post"
+        action="{% url 'excluir_produto' produto.id %}"
+        class="formulario-produto">
+    {% csrf_token %}
+
+    <dl>
+      <div>
+        <dt>Nome</dt>
+        <dd>{{ produto.nome }}</dd>
+      </div>
+      <div>
+        <dt>Preço unitário</dt>
+        <dd>R$ {{ produto.preco|floatformat:"2g" }}</dd>
+      </div>
+      <div>
+        <dt>Estoque</dt>
+        <dd>{{ produto.estoque }} unidade{{ produto.estoque|pluralize }}</dd>
+      </div>
+    </dl>
+
+    {% if produto.pedido_set.exists %}
+    <div class="aviso">
+      <p>Este produto possui pedidos vinculados e não pode ser excluído, para preservar o histórico.</p>
+    </div>
+    {% endif %}
+
+    {% if erro %}
+    <div class="aviso" role="alert"><p>{{ erro }}</p></div>
+    {% endif %}
+
+    <div class="acoes-formulario">
+      {% if not produto.pedido_set.exists %}
+      <button type="submit" class="acao-excluir">Confirmar exclusão</button>
+      {% endif %}
+      <a href="{% url 'catalogo' %}">Cancelar</a>
+    </div>
+  </form>
+</section>
+{% endblock %}
